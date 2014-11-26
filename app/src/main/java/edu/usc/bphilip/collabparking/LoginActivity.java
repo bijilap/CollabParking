@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,8 @@ import com.google.android.gms.plus.model.people.Person;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.usc.bphilip.api.AuthLogin;
 
 
 /**
@@ -176,7 +179,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+       // return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
@@ -350,8 +354,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         private final String mEmail;
         private final String mPassword;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
+        UserLoginTask(String userId, String password) {
+            mEmail = userId;
             mPassword = password;
         }
 
@@ -366,6 +370,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                 return false;
             }
 
+            /*
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
@@ -373,9 +378,26 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                     return pieces[1].equals(mPassword);
                 }
             }
+            */
+            AuthLogin authLogin = new AuthLogin();
+            String url_prefix = ((MainApplication) getApplication()).CSP_SERVER2;
+            Log.d("CollabParking-debug", url_prefix);
+
+            try {
+                String result = authLogin.queryEndpoint(url_prefix, mEmail, mPassword, "1234WEXVTY36MJU");
+                if(result.equals("200")){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            catch(Exception ex){
+                return false;
+            }
 
             // TODO: register the new account here.
-            return true;
+            //return true;
         }
 
         @Override
@@ -384,7 +406,9 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             showProgress(false);
 
             if (success) {
-                finish();
+                Intent i = new Intent(getBaseContext(), Sidebar.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
