@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -24,7 +25,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Sidebar extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, CrowdSourceMenu.OnFragmentInteractionListener,
-        SettingsFragment.OnFragmentInteractionListener{
+        SettingsFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -94,6 +95,33 @@ public class Sidebar extends Activity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
+
+        if(position == 0){
+            Resources res = getResources();
+            String[] menu_list = res.getStringArray(R.array.menu_list);
+            menu_list[0] = ((MainApplication) this.getApplication()).me.name;
+            LoginFragment loginFragObj = new LoginFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, loginFragObj)
+                    .commit();
+            return;
+            /*
+            boolean isLoggedIn = ((MainApplication) this.getApplication()).getLoginStatus();
+            if(!isLoggedIn){
+                //startActivity(new Intent(this, LoginActivity.class));
+                Log.d("MyApp","logging in now");
+                LoginFragment loginFragObj = new LoginFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, loginFragObj)
+                        .commit();
+                return;
+            }
+            else{
+                Log.d("MyApp", "login succeeded");
+            }
+            */
+        }
+
         if(position == 1){
             ParkingMap parkingMapObj =  new ParkingMap();
             fragmentManager.beginTransaction()

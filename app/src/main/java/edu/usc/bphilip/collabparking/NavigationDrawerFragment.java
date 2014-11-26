@@ -4,6 +4,7 @@ package edu.usc.bphilip.collabparking;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -97,11 +98,16 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
+
+        Resources res = getResources();
+        String[] menu_list = res.getStringArray(R.array.menu_list);
+        menu_list[0] = ((MainApplication) this.getActivity().getApplication()).me.name;
+
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                getResources().getStringArray(R.array.menu_list)
+                menu_list
                 ));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;

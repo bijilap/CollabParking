@@ -140,11 +140,23 @@ public class ParkingMap extends MapFragment {
                 String name = parkingLoc.getString("name");
                 LatLng parkingSpot = new LatLng(latitude, longitude);
 
+                //additional metrics for marker snippet
+                String snippetMessage = "";
+                if(parkingLoc.has("capacity")){
+                    snippetMessage+="\nCapacity: "+parkingLoc.getString("capacity");
+                }
+                if(parkingLoc.has("pricePerHour")){
+                    snippetMessage+="\nPrice(per hour): "+parkingLoc.getString("pricePerHour");
+                }
+                if(parkingLoc.has("pricePerDay")){
+                    snippetMessage+="\nPrice(per day): "+parkingLoc.getString("pricePerDay");
+                }
+
                 BitmapDescriptor parkingBitmap = BitmapDescriptorFactory.fromResource(R.drawable.parking_marker);
                 Marker psMarker = mMap.addMarker(new MarkerOptions().position(parkingSpot)
                                 .icon(parkingBitmap)
                                 .title(name)
-                                .snippet("Capacity: 60")
+                                .snippet(snippetMessage)
                 );
             }
         }
