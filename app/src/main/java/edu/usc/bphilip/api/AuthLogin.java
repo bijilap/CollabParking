@@ -26,15 +26,13 @@ public class AuthLogin {
         String authEndpointURL = params[0];
         String userId = params[1];
         String password = params[2];
-        String deviceId = params[3];
-        String logInEndpointURL = params[0];
+
 
         //Log.d("CollabParking-debug", userId);
         //Log.d("CollabParking-debug", password);
 
         authEndpointURL += "/"+userId+"/authenticate";
         Log.d("Collabparking-Debug", authEndpointURL);
-        logInEndpointURL += "/login";
 
         HttpClient httpclient = new DefaultHttpClient();
         HttpPost httppost = new HttpPost(authEndpointURL);

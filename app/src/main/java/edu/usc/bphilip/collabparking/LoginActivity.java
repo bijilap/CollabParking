@@ -384,8 +384,10 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             Log.d("CollabParking-debug", url_prefix);
 
             try {
-                String result = authLogin.queryEndpoint(url_prefix, mEmail, mPassword, "1234WEXVTY36MJU");
+                String result = authLogin.queryEndpoint(url_prefix, mEmail, mPassword);
                 if(result.equals("200")){
+                    ((MainApplication) getApplication()).me.id = mEmail;
+
                     return true;
                 }
                 else{
