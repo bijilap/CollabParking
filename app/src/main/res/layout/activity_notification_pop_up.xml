@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="edu.usc.bphilip.collabparking.NotificationPopUpActivity"
+    android:background="#06000000">
+
+    <TextView android:text="" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/container1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/questionText"
+            android:layout_gravity="left|top" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ignore"
+            android:id="@+id/ignoreButton1"
+            android:layout_gravity="right|bottom"
+            android:background="#ffff1d1d"
+            android:padding="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:id="@+id/submitButton1"
+            android:layout_gravity="left|bottom"
+            android:background="#ff09821b"
+            android:textColor="#ffffffff"
+            android:padding="20dp" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/answerSwitch1"
+            android:textOn="Yes"
+            android:textOff="No"
+            android:layout_gravity="center"
+            android:checked="false" />
+
+    </FrameLayout>
+
+</RelativeLayout>
