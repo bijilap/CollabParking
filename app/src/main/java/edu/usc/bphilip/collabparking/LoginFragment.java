@@ -1,12 +1,15 @@
 package edu.usc.bphilip.collabparking;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 
 /**
@@ -17,7 +20,7 @@ import android.view.ViewGroup;
  * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -58,6 +61,14 @@ public class LoginFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        //setContentView(R.layout.login_fragment);
+        /*
+        TextView tv=new TextView(getActivity());
+        tv = (TextView)getActivity().findViewById(R.id.user_id);
+        tv.setText(((MainApplication) getActivity().getApplication()).me.id);
+        */
+
+
     }
 
     @Override
@@ -65,6 +76,33 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.login_fragment, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+        Switch distanceSwitch = (Switch)view.findViewById(R.id.distance_switch);
+        distanceSwitch.setChecked(((MainApplication)getActivity().getApplication()).preference.distance);
+        distanceSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // do something, the isChecked will be
+                // true if the switch is in the On position
+                ((MainApplication) getActivity().getApplication()).preference.distance = isChecked;
+                Log.d("Switch", "Distance switch");
+            }
+        });
+
+        Switch costSwitch = (Switch)view.findViewById(R.id.cost_switch);
+        costSwitch.setChecked(((MainApplication)getActivity().getApplication()).preference.price);
+        costSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // do something, the isChecked will be
+                // true if the switch is in the On position
+                ((MainApplication)getActivity().getApplication()).preference.price = isChecked;
+                Log.d("Switch", "Cost switch");
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -89,6 +127,11 @@ public class LoginFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
     }
 
     /**

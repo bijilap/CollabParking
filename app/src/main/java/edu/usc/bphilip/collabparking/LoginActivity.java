@@ -411,6 +411,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                 Intent i = new Intent(getBaseContext(), Sidebar.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
+                finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

@@ -28,7 +28,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:paddingTop="40dp"
+            android:paddingTop="60dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Medium Text"
@@ -36,7 +36,7 @@
             android:layout_gravity="left|top" />
         <TextView
             android:layout_width="match_parent"
-            android:paddingTop="80dp"
+            android:paddingTop="100dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Medium Text"

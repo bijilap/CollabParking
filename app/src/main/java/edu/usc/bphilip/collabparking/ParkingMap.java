@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import edu.usc.bphilip.api.OptimalParkingLocations;
 import edu.usc.bphilip.api.ParkingLocations;
 import edu.usc.bphilip.api.UpdateLocation;
 
@@ -113,12 +114,44 @@ public class ParkingMap extends MapFragment
 
                 //fetching the parking locations
                 try {
-                    ParkingLocations parkloc = new ParkingLocations();
-                    String url = "http://54.69.152.156:55321/csp/data/parking/query/point";
-                    String radius="5000";
-                    parkloc.execute(url,""+arg0.getLatitude(), arg0.getLongitude()+"" ,radius);
+                    String resultJSON = "";
+                    boolean distance = ((MainApplication)getActivity().getApplication()).preference.distance;
+                    boolean cost = ((MainApplication)getActivity().getApplication()).preference.price;
 
-                    String resultJSON = parkloc.get();
+                    if((distance == false) && (cost == false) ) {
+                        ParkingLocations parkloc = new ParkingLocations();
+                        String url = "http://54.69.152.156:55321/csp/data/parking/query/point";
+                        String radius = "5000";
+                        parkloc.execute(url, "" + arg0.getLatitude(), arg0.getLongitude() + "", radius);
+                        resultJSON = parkloc.get();
+                    }
+                    else if((distance == true) && (cost == false) ){
+                        OptimalParkingLocations oparkloc = new OptimalParkingLocations();
+                        String url = "http://54.69.152.156:55321/csp/data/parking/query/nearest";
+                        String userid = ((MainApplication)getActivity().getApplication()).me.id;
+                        String count = "3";
+                        oparkloc.execute(url,userid, count, "count");
+                        resultJSON = oparkloc.get();
+
+                    }
+                    else if((distance == false) && (cost == true) ){
+                        OptimalParkingLocations oparkloc = new OptimalParkingLocations();
+                        String url = "http://54.69.152.156:55321/csp/data/parking/query/cheapest";
+                        String userid = ((MainApplication)getActivity().getApplication()).me.id;
+                        String count = "3";
+                        oparkloc.execute(url,userid, count, "hours");
+                        resultJSON = oparkloc.get();
+                    }
+                    else{
+                        OptimalParkingLocations oparkloc = new OptimalParkingLocations();
+                        String url = "http://54.69.152.156:55321/csp/data/parking/query/skyline";
+                        String userid = ((MainApplication)getActivity().getApplication()).me.id;
+                        String count = "3";
+                        oparkloc.execute(url,userid, count, "hours");
+                        resultJSON = oparkloc.get();
+                    }
+
+
                     addParkingMarker(resultJSON);
 
                     //Update locations
