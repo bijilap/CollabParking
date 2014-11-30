@@ -194,17 +194,10 @@ public class Sidebar extends Activity
                     .commit();*/
             return;
         }
-        if(position == 3){
+        if(position == 2){
             CrowdSourceMenu csmObj = new CrowdSourceMenu();
             fragmentManager.beginTransaction()
                     .replace(R.id.container, csmObj)
-                    .commit();
-            return;
-        }
-        if(position == 4){
-            SettingsFragment sfObj = new SettingsFragment();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, sfObj)
                     .commit();
             return;
         }

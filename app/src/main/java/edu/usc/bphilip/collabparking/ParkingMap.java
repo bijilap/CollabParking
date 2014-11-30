@@ -1,6 +1,7 @@
 package edu.usc.bphilip.collabparking;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -21,15 +22,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import edu.usc.bphilip.api.ParkingLocations;
+import edu.usc.bphilip.api.UpdateLocation;
 
 /**
  * Created by bijil_000 on 10/21/2014.
  */
 
-public class ParkingMap extends MapFragment {
+public class ParkingMap extends MapFragment
+        implements GoogleMap.OnMarkerClickListener {
     private GoogleMap mMap;
-
+    HashMap<String, HashMap> markerInfo = new HashMap<String, HashMap>();
     @Override
     public void onCreate(Bundle arg0) {
         super.onCreate(arg0);
@@ -86,6 +91,7 @@ public class ParkingMap extends MapFragment {
         Log.d("Debug-Collabparking", "In setupMap");
         mMap.setMyLocationEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+        mMap.setOnMarkerClickListener(this);
         //LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         GPSTracker gps = new GPSTracker(getActivity());
         if(gps.canGetLocation()){
@@ -114,6 +120,13 @@ public class ParkingMap extends MapFragment {
 
                     String resultJSON = parkloc.get();
                     addParkingMarker(resultJSON);
+
+                    //Update locations
+                    UpdateLocation upl = new UpdateLocation();
+                    String userid = ((MainApplication) getActivity().getApplication()).me.id;
+                    String url2 = ((MainApplication) getActivity().getApplication()).CSP_SERVER1+"/csp/data/user/"+userid+"/location";
+                    upl.execute(url2, arg0.getLatitude()+"", arg0.getLongitude()+"");
+                    Log.d("Update-location", url2);
                 }
                 catch(Exception e){
                     e.printStackTrace();
@@ -142,14 +155,28 @@ public class ParkingMap extends MapFragment {
 
                 //additional metrics for marker snippet
                 String snippetMessage = "";
+                HashMap<String, String> record = new HashMap<String, String>();
+                record.put("name", name);
+                record.put("latitude", latitude+"");
+                record.put("longitude", longitude+"");
+                record.put("id", "N/A");
+                if(parkingLoc.has("id")){
+                    record.put("id", parkingLoc.getString("id"));
+                }
+                record.put("capacity", "N/A");
                 if(parkingLoc.has("capacity")){
                     snippetMessage+="\nCapacity: "+parkingLoc.getString("capacity");
+                    record.put("capacity", parkingLoc.getString("capacity"));
                 }
+                record.put("pricePerHour", "N/A");
                 if(parkingLoc.has("pricePerHour")){
                     snippetMessage+="\nPrice(per hour): "+parkingLoc.getString("pricePerHour");
+                    record.put("pricePerHour", "$"+parkingLoc.getString("pricePerHour"));
                 }
+                record.put("pricePerDay", "N/A");
                 if(parkingLoc.has("pricePerDay")){
                     snippetMessage+="\nPrice(per day): "+parkingLoc.getString("pricePerDay");
+                    record.put("pricePerDay", "$"+parkingLoc.getString("pricePerDay"));
                 }
 
                 BitmapDescriptor parkingBitmap = BitmapDescriptorFactory.fromResource(R.drawable.parking_marker);
@@ -158,6 +185,8 @@ public class ParkingMap extends MapFragment {
                                 .title(name)
                                 .snippet(snippetMessage)
                 );
+
+                markerInfo.put(psMarker.getId(), record);
             }
         }
         catch(Exception e){
@@ -165,4 +194,19 @@ public class ParkingMap extends MapFragment {
         }
     }
 
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+        Intent i = new Intent(getActivity().getBaseContext(), MapMarkerActivity.class);
+        Bundle b = new Bundle();
+        HashMap<String, String> record = new HashMap<String, String>();
+        record = markerInfo.get(marker.getId());
+        for(String key : record.keySet()){
+            b.putString(key, record.get(key));
+        }
+        Log.d("Marker", b.toString());
+        i.putExtras(b);
+        startActivity(i);
+        return true;
+    }
 }
+

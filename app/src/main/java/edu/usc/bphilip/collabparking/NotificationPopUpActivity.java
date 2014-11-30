@@ -13,6 +13,8 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import edu.usc.bphilip.api.AnswerQuestion;
+
 
 public class NotificationPopUpActivity extends Activity {
 
@@ -23,13 +25,34 @@ public class NotificationPopUpActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification_pop_up);
 
+        final String csp_server = ((MainApplication) getApplication()).CSP_SERVER2;
+        final String userId = ((MainApplication) getApplication()).me.id;
+
+        TextView tv=new TextView(this);
+        tv = (TextView)findViewById(R.id.questionText);
+        try{
+            Bundle b = getIntent().getExtras();
+            tv.setText(b.getString("question"));
+            questionId = b.getString("question_id");
+        }
+        catch(Exception e){
+            tv.setText("My Question");
+        }
+
         Button submitButton = (Button) findViewById(R.id.submitButton1);
         submitButton.setOnClickListener( new OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
+                String url = csp_server+"/"+userId+"/answer/"+questionId;
+                AnswerQuestion ansq = new AnswerQuestion();
+                String finalAns = "No";
+                if(answer)
+                    finalAns = "Yes";
+                ansq.execute(url, finalAns);
                 Log.d("Notification-debug", "Submit button");
+                finish();
 
             }
         });
@@ -52,16 +75,6 @@ public class NotificationPopUpActivity extends Activity {
                 Log.d("Notification-debug", answer+"");
             }
         });
-
-        TextView tv=new TextView(this);
-        tv = (TextView)findViewById(R.id.questionText);
-        try{
-            Bundle b = getIntent().getExtras();
-            tv.setText(b.getString("question"));
-        }
-        catch(Exception e){
-            tv.setText("My Question");
-        }
     }
 
 

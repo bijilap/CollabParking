@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-<!--         Google plus login permissions -->
+    <!-- Google plus login permissions -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -29,8 +29,8 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="edu.usc.bphilip.collabparking.permission.C2D_MESSAGE" />
-    <!-- end of GCM Client -->
 
+    <!-- end of GCM Client -->
     <application
         android:name="edu.usc.bphilip.collabparking.MainApplication"
         android:allowBackup="true"
@@ -52,7 +52,7 @@
             </intent-filter>
         </activity>
 
-<!-- GCM Intents -->
+        <!-- GCM Intents -->
         <receiver
             android:name="edu.usc.bphilip.collabparking.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
@@ -77,7 +77,7 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
 
-<!--             Permissions for facebook -->
+        <!-- Permissions for facebook -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -93,9 +93,19 @@
         -->
         <activity
             android:name="edu.usc.bphilip.collabparking.NotificationPopUpActivity"
-            android:theme="@android:style/Theme.Dialog"
             android:icon="@drawable/ic_launcher"
-            android:label="@string/title_activity_notification_pop_up" >
+            android:label="@string/title_activity_notification_pop_up"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name="edu.usc.bphilip.collabparking.MapMarkerActivity"
+            android:label="@string/title_activity_map_marker"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name="edu.usc.bphilip.collabparking.SolutionPopupActivity"
+            android:label="@string/title_activity_solution_popup"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
     </application>
 

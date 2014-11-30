@@ -60,12 +60,27 @@ public class GcmIntentService extends IntentService {
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
                 // Post notification of received message.
                 sendNotification(extras.getString("question"));
-                Intent i = new Intent(getBaseContext(),NotificationPopUpActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Bundle b = new Bundle();
-                b.putString("question", extras.getString("question"));
-                i.putExtras(b);
-                startActivity(i);
+                if(extras.getString("gcm_type").equals("question")) {
+                    Intent i = new Intent(getBaseContext(), NotificationPopUpActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Bundle b = new Bundle();
+                    b.putString("question", extras.getString("question"));
+                    b.putString("question_id", extras.getString("question_id"));
+                    i.putExtras(b);
+                    startActivity(i);
+                }
+                else if(extras.getString("gcm_type").equals("solution")) {
+                    Intent i = new Intent(getBaseContext(), SolutionPopupActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Bundle b = new Bundle();
+                    b.putString("question", extras.getString("question"));
+                    //b.putString("question_id", extras.getString("question_id"));
+                    b.putString("yes", extras.getString("yes"));
+                    b.putString("no", extras.getString("no"));
+                    i.putExtras(b);
+                    startActivity(i);
+
+                }
 
                 Log.i(TAG, "Received: " + extras.toString());
             }

@@ -101,7 +101,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         Resources res = getResources();
         String[] menu_list = res.getStringArray(R.array.menu_list);
-        menu_list[0] = ((MainApplication) this.getActivity().getApplication()).me.name;
+        menu_list[0] = ((MainApplication) this.getActivity().getApplication()).me.id;
 
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
