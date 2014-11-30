@@ -1,0 +1,104 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="edu.usc.bphilip.collabparking.EditParkingLot">
+
+    <TextView android:text="Parking Lot Form"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/formTitle"
+        android:paddingBottom="30dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+     />
+    <TextView android:text="Name: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/formName"
+        android:paddingBottom="20dp"
+        android:layout_below="@+id/formTitle"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+     />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/formNameValue"
+        android:layout_below="@+id/formTitle"
+        android:layout_toEndOf="@+id/formName"
+        android:layout_toRightOf="@+id/formName"
+        android:width="@dimen/dialog_fixed_width_major"
+        />
+    <TextView android:text="Price per day: $"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/formPricePerDay"
+        android:layout_below="@+id/formName"
+        android:paddingBottom="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/formPricePerDayValue"
+        android:layout_below="@+id/formNameValue"
+        android:layout_toEndOf="@+id/formPricePerDay"
+        android:layout_toRightOf="@+id/formPricePerDay"
+        android:width="@dimen/dialog_fixed_width_major"
+        />
+
+    <TextView android:text="Price per hour: $"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/formPricePerHour"
+        android:layout_below="@+id/formPricePerDay"
+        android:paddingBottom="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/formPricePerHourValue"
+        android:layout_below="@+id/formPricePerDayValue"
+        android:layout_toEndOf="@+id/formPricePerHour"
+        android:layout_toRightOf="@+id/formPricePerHour"
+        android:paddingBottom="20dp"
+        android:width="@dimen/dialog_fixed_width_major"
+        />
+
+    <TextView android:text="Capacity: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/formCapacity"
+        android:layout_below="@+id/formPricePerHour"
+        android:paddingBottom="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/formCapacityValue"
+        android:layout_below="@+id/formPricePerHourValue"
+        android:layout_toEndOf="@+id/formCapacity"
+        android:layout_toRightOf="@+id/formCapacity"
+        android:width="@dimen/dialog_fixed_width_major"
+        />
+
+    <Button android:id="@+id/submitFormButton" style="?android:textAppearanceSmall"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" android:text="Submit"
+        android:layout_below="@+id/formCapacity"
+        android:textStyle="bold" />
+
+    <Button android:id="@+id/deleteFormButton" style="?android:textAppearanceSmall"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" android:text="Delete"
+        android:layout_below="@+id/submitFormButton"
+        android:textStyle="bold" />
+
+</RelativeLayout>

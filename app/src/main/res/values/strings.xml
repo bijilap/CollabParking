@@ -27,5 +27,6 @@
     <string name="price_per_day_label">Price per day:  </string>
     <string name="price_per_day_value">N/A</string>
     <string name="title_activity_solution_popup">Collabparking- Survey  Result</string>
+    <string name="title_activity_edit_parking_lot">EditParkingLot</string>
 
 </resources>

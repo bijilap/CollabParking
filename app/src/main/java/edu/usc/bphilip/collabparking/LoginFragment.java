@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 
 
 /**
@@ -81,6 +82,10 @@ public class LoginFragment extends Fragment implements CompoundButton.OnCheckedC
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+
+        TextView tv=new TextView(getActivity());
+        tv = (TextView)view.findViewById(R.id.user_id);
+        tv.setText(((MainApplication) getActivity().getApplication()).me.id);
 
         Switch distanceSwitch = (Switch)view.findViewById(R.id.distance_switch);
         distanceSwitch.setChecked(((MainApplication)getActivity().getApplication()).preference.distance);

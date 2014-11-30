@@ -197,9 +197,10 @@ public class Sidebar extends Activity
             return;
         }
         if(position == 2){
-            CrowdSourceMenu csmObj = new CrowdSourceMenu();
+            //CrowdSourceMenu csmObj = new CrowdSourceMenu();
+            EditParkingMap epmm = new EditParkingMap();
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, csmObj)
+                    .replace(R.id.container, epmm)
                     .commit();
             return;
         }
